@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.2
+// @version     1.3
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.js
 // @author      georg95
@@ -125,7 +125,7 @@ function createLayout() {
   container.style.margin = '0'
   container.style.padding = '0'
   const layoutWidth = Math.min(window.innerWidth, 768)
-  const layoutHeight = Math.min(window.innerHeight, 768)
+  const layoutHeight = Math.min(layoutWidth, window.innerHeight)
   container.style.width = `${layoutWidth}px`
   container.style.height = `${layoutHeight}px`
   container.style.background = 'url('+GM_getResourceURL('BACKGROUND')+')'
@@ -143,6 +143,16 @@ function createLayout() {
   overlay.style.alignItems = 'center'
   overlay.style.background = 'rgba(0, 0, 0, 0.6)'
   overlay.style.backgroundSize = 'cover'
+
+  const promoLink = document.createElement('a')
+  promoLink.style.color = 'lime'
+  promoLink.style.textShadow = 'black 0 0 3px'
+  promoLink.style.position = 'absolute'
+  promoLink.style.left = '10px'
+  promoLink.style.top = '10px'
+  promoLink.href = 'https://github.com/georg95/hamster-bike-keygen'
+  promoLink.innerText = 'github.com/georg95/hamster-bike-keygen'
+  promoLink.target = '_blank'
 
   const keyText = document.createElement('div')
   keyText.style.margin = '20px 0'
@@ -186,6 +196,7 @@ function createLayout() {
   overlay.appendChild(buttons)
   container.appendChild(musicBtn)
   container.appendChild(overlay)
+  container.appendChild(promoLink)
   document.body.appendChild(container)
   try {
     const audio = new Audio(GM_getResourceURL('MUSIC'))
