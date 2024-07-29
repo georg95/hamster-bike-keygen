@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.3
+// @version     1.4
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.js
 // @author      georg95
@@ -64,9 +64,9 @@ function initProgress(keyText) {
 }
 
 async function start() {
-  const CLIENT_ID = localStorage.getItem('3dRaceClientID') || generateClientId()
-  localStorage.setItem('3dRaceClientID', CLIENT_ID)
-  console.log('clientId', CLIENT_ID)
+  const CLIENT_ID = GM_getValue('clientID', generateClientId())
+  GM_setValue('clientID', CLIENT_ID)
+  console.log('clientID', CLIENT_ID)
   const { keyText, copyBtn, nextBtn, buttons } = createLayout()
 
   const keyTextOriginalSize = keyText.style.fontSize
