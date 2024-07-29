@@ -2,6 +2,7 @@
 // @name        Hamster bike keygen
 // @version     1.0
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
+// @downloadURL https://georg95.github.io/hamster-bike-keygen/script.js
 // @author      georg95
 // @namespace   Violentmonkey Scripts
 // @match       *://*/*
@@ -14,8 +15,9 @@
 
 const APP_TOKEN = 'd28721be-fd2d-4b45-869e-9f253b554e50'
 const PROMO_ID = '43e35910-c168-4634-ad4f-52fd764a843f'
-const BACKGROUND = 'https://raw.githubusercontent.com/georg95/hamster-bike-keygen/main/keygen_bg.jpg'
-const MUSIC = 'https://raw.githubusercontent.com/georg95/hamster-bike-keygen/main/ICU%20-%20CrackMe%20v0.2.mp3'
+
+const BACKGROUND = 'https://georg95.github.io/hamster-bike-keygen/keygen_bg.jpg'
+const MUSIC = 'https://georg95.github.io/hamster-bike-keygen/ICU%20-%20CrackMe%20v0.2.mp3'
 const DEBUG_MODE = false
 const EVENTS_DELAY = DEBUG_MODE ? 350 : 20000
 
