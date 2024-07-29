@@ -7,17 +7,18 @@
 // @namespace   Violentmonkey Scripts
 // @match       *://*/*
 // @grant       GM_xmlhttpRequest
+// @grant       GM_getResourceURL
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @run-at      document-end
+// @resource    BACKGROUND https://georg95.github.io/hamster-bike-keygen/keygen_bg.jpg
+// @resource    MUSIC https://georg95.github.io/hamster-bike-keygen/ICU%20-%20CrackMe%20v0.2.mp3
 // @noframes
 // ==/UserScript==
 
 const APP_TOKEN = 'd28721be-fd2d-4b45-869e-9f253b554e50'
 const PROMO_ID = '43e35910-c168-4634-ad4f-52fd764a843f'
 
-const BACKGROUND = 'https://georg95.github.io/hamster-bike-keygen/keygen_bg.jpg'
-const MUSIC = 'https://georg95.github.io/hamster-bike-keygen/ICU%20-%20CrackMe%20v0.2.mp3'
 const DEBUG_MODE = false
 const EVENTS_DELAY = DEBUG_MODE ? 350 : 20000
 
@@ -121,11 +122,13 @@ function createLayout() {
   container.style.position = 'absolute'
   container.style.top = '0px'
   container.style.right = '0px'
+  container.style.margin = '0'
+  container.style.padding = '0'
   const layoutWidth = Math.min(window.innerWidth, 768)
   const layoutHeight = Math.min(window.innerHeight, 768)
   container.style.width = `${layoutWidth}px`
   container.style.height = `${layoutHeight}px`
-  container.style.background = 'url('+BACKGROUND+')'
+  container.style.background = 'url('+GM_getResourceURL('BACKGROUND')+')'
   container.style.backgroundPosition = 'center'
   container.style.backgroundSize = 'cover'
 
@@ -134,21 +137,26 @@ function createLayout() {
   overlay.style.display = 'flex'
   overlay.style.flexDirection = 'column'
   overlay.style.width = '100%'
-  overlay.style.padding = '10px'
-  overlay.style.paddingBottom = '30px'
+  overlay.style.margin = '0'
+  overlay.style.padding = '0 0 30px 0'
   overlay.style.justifyContent = 'center'
   overlay.style.alignItems = 'center'
   overlay.style.background = 'rgba(0, 0, 0, 0.6)'
   overlay.style.backgroundSize = 'cover'
 
   const keyText = document.createElement('div')
+  keyText.style.margin = '20px 0'
+  keyText.style.padding = '0'
+  keyText.style.background = 'none'
   keyText.innerText = '⏳⏳⏳'
   keyText.style.color = 'white'
   keyText.style.fontSize = `${Math.min(Math.floor(layoutWidth / 16))}px`
-  keyText.style.marginBottom = '15px'
 
   const buttons = document.createElement('div')
+  buttons.style.background = 'none'
   buttons.style.display = 'flex'
+  buttons.style.margin = '0'
+  buttons.style.padding = '0'
 
   const copyBtn = document.createElement('button')
   copyBtn.style.width = '50px'
@@ -180,7 +188,7 @@ function createLayout() {
   container.appendChild(overlay)
   document.body.appendChild(container)
   try {
-    const audio = new Audio(MUSIC)
+    const audio = new Audio(GM_getResourceURL('MUSIC'))
     audio.loop = true
     function switchAudio() {
       if (audio.paused) {
