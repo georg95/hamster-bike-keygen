@@ -10,7 +10,7 @@
 <img src="help/2.jpg" width="200"><img src="help/3.jpg" width="200"><img src="help/4.jpg" width="200">
 
 ## 4. Install script
-`+` -> `Install from URL` -> `https://georg95.github.io/hamster-bike-keygen/script.js` -> `Install (Ctrl+Enter)`
+`+` -> `Install from URL` -> `https://georg95.github.io/hamster-bike-keygen/script.user.js` -> `Install (Ctrl+Enter)`
 
 <img src="help/5.jpg" width="200"><img src="help/6.jpg" width="200"><img src="help/7.jpg" width="200">
 

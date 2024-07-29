@@ -2,7 +2,7 @@
 // @name        Hamster bike keygen
 // @version     1.4
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
-// @downloadURL https://georg95.github.io/hamster-bike-keygen/script.js
+// @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
 // @author      georg95
 // @namespace   Violentmonkey Scripts
 // @match       *://example.com/*
@@ -151,8 +151,8 @@ function createLayout() {
   promoLink.style.position = 'absolute'
   promoLink.style.left = '10px'
   promoLink.style.top = '10px'
-  promoLink.href = 'https://github.com/georg95/hamster-bike-keygen'
-  promoLink.innerText = 'github.com/georg95/hamster-bike-keygen'
+  promoLink.href = 'https://georg95.github.io/bike-keygen.html'
+  promoLink.innerText = 'georg95.github.io/bike-keygen.html'
   promoLink.target = '_blank'
 
   const keyText = document.createElement('div')
