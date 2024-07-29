@@ -14,6 +14,6 @@
 
 <img src="help/5.jpg" width="200"><img src="help/6.jpg" width="200"><img src="help/7.jpg" width="200">
 
-## 5. Go to [any web page](https://www.wikipedia.org/) and click 🚲
+## 5. Go to [this page](https://example.com/) and click 🚲
 
 <img src="help/8.jpg" width="200"><img src="help/9.jpg" width="200"><img src="help/10.jpg" width="200">
