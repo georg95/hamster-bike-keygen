@@ -6,6 +6,7 @@
 // @author      georg95
 // @namespace   Violentmonkey Scripts
 // @match       *://example.com/*
+// @match       *://www.example.com/*
 // @grant       GM_xmlhttpRequest
 // @grant       GM_getResourceURL
 // @grant       GM_getValue
