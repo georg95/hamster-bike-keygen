@@ -21,21 +21,7 @@ const PROMO_ID = '43e35910-c168-4634-ad4f-52fd764a843f'
 const DEBUG_MODE = false
 const EVENTS_DELAY = DEBUG_MODE ? 350 : 20000
 
-addButton()
-
-function addButton() {
-  const btn = document.createElement('button')
-  btn.style.width = '100px'
-  btn.style.height = '100px'
-  btn.onclick = start
-  btn.style.position = 'absolute'
-  btn.style.zIndex = 99999999
-  btn.style.top = '10px'
-  btn.style.right = '10px'
-  btn.innerText = '🚲'
-  btn.style.fontSize = '64px'
-  document.body.appendChild(btn)
-}
+start()
 
 function initProgress(keyText) {
   const delays = 6
