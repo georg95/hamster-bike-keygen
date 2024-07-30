@@ -304,7 +304,7 @@ async function vmFetch(url, options) {
         try {
           console.log(response.responseText)
           resolve(JSON.parse(response.responseText))
-        } catch(e) {reject(e)}
+        } catch(e) {reject(response.responseText)}
       },
       onerror: response => {
         reject(response)
