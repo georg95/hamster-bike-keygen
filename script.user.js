@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.5
+// @version     1.6
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
 // @author      georg95
@@ -12,7 +12,6 @@
 // @grant       GM_setValue
 // @run-at      document-end
 // @resource    BACKGROUND https://georg95.github.io/hamster-bike-keygen/keygen_bg.jpg
-// @resource    MUSIC https://georg95.github.io/hamster-bike-keygen/ICU%20-%20CrackMe%20v0.2.mp3
 // @noframes
 // ==/UserScript==
 
@@ -199,7 +198,7 @@ function createLayout() {
   container.appendChild(promoLink)
   document.body.appendChild(container)
   try {
-    const audio = new Audio(GM_getResourceURL('MUSIC'))
+    const audio = new Audio('https://georg95.github.io/hamster-bike-keygen/ICU%20-%20CrackMe%20v0.2.mp3')
     audio.loop = true
     function switchAudio() {
       if (audio.paused) {
