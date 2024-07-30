@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.6
+// @version     1.7
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
 // @author      georg95
@@ -51,7 +51,7 @@ async function start() {
   const CLIENT_ID = GM_getValue('clientID', generateClientId())
   GM_setValue('clientID', CLIENT_ID)
   console.log('clientID', CLIENT_ID)
-  const { keyText, copyBtn, nextBtn, buttons } = createLayout()
+  const { startBtn, keyText, copyBtn, nextBtn, buttons } = createLayout()
 
   const keyTextOriginalSize = keyText.style.fontSize
   nextBtn.onclick = () => {
@@ -60,6 +60,7 @@ async function start() {
     buttons.removeChild(nextBtn)
   }
   async function keygen() {
+    keyText.innerText = '⏳⏳⏳'
     const token = await login(CLIENT_ID)
     const progressDelay = initProgress(keyText)
     console.log('login, token:', token)
@@ -92,7 +93,11 @@ async function start() {
     buttons.innerHTML = ''
     buttons.appendChild(nextBtn)
   }
-  await keygen().catch(onKeygenFail)
+
+  startBtn.onclick = () => {
+    buttons.innerHTML = ''
+    keygen().catch(onKeygenFail)
+  }
 }
 
 function createLayout() {
@@ -143,7 +148,6 @@ function createLayout() {
   keyText.style.margin = '20px 0'
   keyText.style.padding = '0'
   keyText.style.background = 'none'
-  keyText.innerText = '⏳⏳⏳'
   keyText.style.color = 'white'
   keyText.style.fontSize = `${Math.min(Math.floor(layoutWidth / 16))}px`
 
@@ -177,13 +181,22 @@ function createLayout() {
   musicBtn.style.background = 'none'
   musicBtn.style.fontSize = '32px'
 
+  const startBtn = document.createElement('button')
+  startBtn.style.width = '100px'
+  startBtn.style.height = '100px'
+  startBtn.style.fontSize = '50px'
+  startBtn.innerText = '▶️'
+
+  buttons.appendChild(startBtn)
   overlay.appendChild(keyText)
   overlay.appendChild(buttons)
-  container.appendChild(musicBtn)
   container.appendChild(overlay)
   container.appendChild(promoLink)
   document.body.appendChild(container)
-  try {
+
+  startBtn.addEventListener('click', runAudio)
+  function runAudio() {
+    startBtn.removeEventListener('click', runAudio)
     const audio = new Audio('https://georg95.github.io/hamster-bike-keygen/ICU%20-%20CrackMe%20v0.2.mp3')
     audio.loop = true
     function switchAudio() {
@@ -204,10 +217,9 @@ function createLayout() {
       switchAudio()
     }
     musicBtn.onclick = switchAudio
-  } catch(e) {
-    console.error(e)
+    container.appendChild(musicBtn)
   }
-  return { keyText, copyBtn, nextBtn, buttons }
+  return { keyText, startBtn, copyBtn, nextBtn, buttons }
 }
 
 
