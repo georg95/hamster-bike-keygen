@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.8
+// @version     1.9
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
 // @author      georg95
@@ -20,6 +20,11 @@ const PROMO_ID = '43e35910-c168-4634-ad4f-52fd764a843f'
 
 const DEBUG_MODE = false
 const EVENTS_DELAY = DEBUG_MODE ? 350 : 20000
+
+const PARAMS = URL.parse(location.href).searchParams
+const USER_ID = PARAMS.get('id')
+const USER = PARAMS.get('user')
+const HASH = PARAMS.get('hash')
 
 start()
 
@@ -47,21 +52,36 @@ function initProgress(keyText) {
   return progressDelay
 }
 
+async function commitKey(key) {
+  const keyData = btoa(JSON.stringify({ id: USER_ID, user: USER, hash: HASH, key }))
+  if (DEBUG_MODE) {
+    console.log('[bg] commit key', key)
+    return await vmFetch('http://localhost:7000/key?v='+keyData, { method: 'POST' })
+  }
+  return await vmFetch('http://176.119.159.166:7000/key?v='+keyData, { method: 'POST' })
+}
+
+
 async function start() {
   const CLIENT_ID = GM_getValue('clientID', generateClientId())
   GM_setValue('clientID', CLIENT_ID)
   console.log('clientID', CLIENT_ID)
-  const { startBtn, keyText, copyBtn, nextBtn, buttons } = createLayout()
+  const { startBtn, keyText, pointsText, copyBtn, nextBtn, buttons } = createLayout()
 
+  let farmedKeys = 0
+  pointsText.innerText = `@${USER}: +💎0`
   const keyTextOriginalSize = keyText.style.fontSize
-  nextBtn.onclick = () => {
+  function runAgain() {
     keyText.style.fontSize = keyTextOriginalSize
     keygen().catch(onKeygenFail)
+  }
+  nextBtn.onclick = () => {
+    runAgain()
     buttons.removeChild(nextBtn)
   }
   async function keygen() {
     keyText.innerText = '⏳⏳⏳'
-    const token = await login(CLIENT_ID)
+    const token = await login(USER_ID ? generateClientId() : CLIENT_ID)
     const progressDelay = initProgress(keyText)
     console.log('login, token:', token)
     for (let i = 0; i < 7; i++) {
@@ -75,6 +95,21 @@ async function start() {
     await progressDelay()
     const key = await generateKey(token)
     console.log('key:', key)
+    if (USER_ID) {
+      const {status,points} = await commitKey(key)
+      if (status !== 'ok') {
+        keyText.innerText = `⛔ ${status}`
+        buttons.appendChild(startBtn)
+        return
+      }
+      console.log('status', status, 'points', points)
+      farmedKeys++
+      pointsText.innerText = `@${USER}: +💎${points * farmedKeys}`
+      keyText.innerText = `⏳ ${EVENTS_DELAY/1000}s`
+      await sleep(EVENTS_DELAY * delayRandom())
+      runAgain()
+      return
+    }
     keyText.innerText = key
     copyBtn.onclick = () => {
       navigator.clipboard.writeText(key)
@@ -87,10 +122,16 @@ async function start() {
     buttons.appendChild(copyBtn)
     buttons.appendChild(nextBtn)
   }
-  function onKeygenFail(e) {
+  async function onKeygenFail(e) {
     keyText.style.fontSize = '12px'
-    keyText.innerText = e.toString()
+    console.log(e)
+    keyText.innerText = e.toString()+'\nRestart in 20s...'
     buttons.innerHTML = ''
+    if (USER_ID) {
+      await sleep(EVENTS_DELAY * delayRandom())
+      runAgain()
+      return
+    }
     buttons.appendChild(nextBtn)
   }
 
@@ -151,6 +192,13 @@ function createLayout() {
   keyText.style.color = 'white'
   keyText.style.fontSize = `${Math.min(Math.floor(layoutWidth / 16))}px`
 
+  const pointsText = document.createElement('div')
+  pointsText.style.margin = '20px 0'
+  pointsText.style.padding = '0'
+  pointsText.style.background = 'none'
+  pointsText.style.color = 'white'
+  pointsText.style.fontSize = `${Math.min(Math.floor(layoutWidth / 16))}px`
+
   const buttons = document.createElement('div')
   buttons.style.background = 'none'
   buttons.style.display = 'flex'
@@ -189,6 +237,9 @@ function createLayout() {
 
   buttons.appendChild(startBtn)
   overlay.appendChild(keyText)
+  if (USER_ID) {
+    overlay.appendChild(pointsText)
+  }
   overlay.appendChild(buttons)
   container.appendChild(overlay)
   container.appendChild(promoLink)
@@ -219,7 +270,7 @@ function createLayout() {
     musicBtn.onclick = switchAudio
     container.appendChild(musicBtn)
   }
-  return { keyText, startBtn, copyBtn, nextBtn, buttons }
+  return { keyText, pointsText, startBtn, copyBtn, nextBtn, buttons }
 }
 
 
@@ -230,7 +281,7 @@ function delayRandom() {
 async function login(clientId) {
     if(!clientId) { throw new Error('no client id') }
     if (DEBUG_MODE) {
-      return 'd28721be-fd2d-4b45-869e-9f253b554e50:deviceid:1722266117413-8779883520062908680:8B5BnSuEV2W:1722266117478'
+      return 'd28721be-fd2d-4b45-869e-9f253b554e50:deviceid:1722266117413-8779883520062908680:8B5BnSuEV2W:'+Date.now()
     }
     const { clientToken } = await vmFetch('https://api.gamepromo.io/promo/login-client', {
         headers: {
@@ -291,7 +342,6 @@ async function generateKey(clientToken) {
     })
     return promoCode
 }
-
 async function vmFetch(url, options) {
   return new Promise((resolve, reject) => {
     GM_xmlhttpRequest({
@@ -307,7 +357,7 @@ async function vmFetch(url, options) {
         } catch(e) {reject(response.responseText)}
       },
       onerror: response => {
-        reject(response)
+        reject(response.responseText || 'No internet?')
       },
     })
   })
