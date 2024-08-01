@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.10
+// @version     1.11
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
 // @author      georg95
@@ -21,7 +21,7 @@ const PROMO_ID = '43e35910-c168-4634-ad4f-52fd764a843f'
 const DEBUG_MODE = false
 const EVENTS_DELAY = DEBUG_MODE ? 350 : 20000
 
-const PARAMS = URL.parse(location.href).searchParams
+const PARAMS = new URL(location.href).searchParams
 const USER_ID = PARAMS.get('id')
 const USER = PARAMS.get('user')
 const HASH = PARAMS.get('hash')
