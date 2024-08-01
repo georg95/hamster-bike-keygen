@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Hamster bike keygen
-// @version     1.9
+// @version     1.10
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
 // @author      georg95
@@ -63,9 +63,6 @@ async function commitKey(key) {
 
 
 async function start() {
-  const CLIENT_ID = GM_getValue('clientID', generateClientId())
-  GM_setValue('clientID', CLIENT_ID)
-  console.log('clientID', CLIENT_ID)
   const { startBtn, keyText, pointsText, copyBtn, nextBtn, buttons } = createLayout()
 
   let farmedKeys = 0
@@ -81,7 +78,7 @@ async function start() {
   }
   async function keygen() {
     keyText.innerText = '⏳⏳⏳'
-    const token = await login(USER_ID ? generateClientId() : CLIENT_ID)
+    const token = await login(generateClientId())
     const progressDelay = initProgress(keyText)
     console.log('login, token:', token)
     for (let i = 0; i < 7; i++) {
@@ -181,7 +178,7 @@ function createLayout() {
   promoLink.style.position = 'absolute'
   promoLink.style.left = '10px'
   promoLink.style.top = '10px'
-  promoLink.href = 'https://georg95.github.io/bike-keygen.html'
+  promoLink.href = location.href
   promoLink.innerText = 'georg95.github.io/bike-keygen.html'
   promoLink.target = '_blank'
 
