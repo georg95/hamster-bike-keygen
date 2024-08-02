@@ -29,8 +29,8 @@ const HASH = PARAMS.get('hash')
 start()
 
 function initProgress(keyText) {
-  const delays = 6
-  const progressPerDelay = 20
+  const delays = 1
+  const progressPerDelay = 2
   let totalProgress = progressPerDelay * delays
   let emojiFlip = false
   keyText.innerText = `${emojiFlip ? '⏳' : '⌛'}0%`
