@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Hamster bike keygen
+// @name        Hamster Chain Cube keygen
 // @version     1.11
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
