@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Hamster bike keygen
+// @name        Hamster Chain Cube keygen
 // @version     1.11
 // @homepageURL https://github.com/georg95/hamster-bike-keygen/blob/main/README.md
 // @downloadURL https://georg95.github.io/hamster-bike-keygen/script.user.js
@@ -15,8 +15,8 @@
 // @noframes
 // ==/UserScript==
 
-const APP_TOKEN = 'd28721be-fd2d-4b45-869e-9f253b554e50'
-const PROMO_ID = '43e35910-c168-4634-ad4f-52fd764a843f'
+const APP_TOKEN = 'd1690a07-3780-4068-810f-9b5bbf2931b2'
+const PROMO_ID = 'b4170868-cef0-424f-8eb9-be0622e8e8e3'
 
 const DEBUG_MODE = false
 const EVENTS_DELAY = DEBUG_MODE ? 350 : 20000
